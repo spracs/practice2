@@ -13,3 +13,6 @@ Host target-host-name
   HostName 10.128.0.3
   ProxyJump instance-1
 
+bastion_IP = 35.208.230.134
+someinternalhost_IP = 10.128.0.3
+
