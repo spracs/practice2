@@ -1,0 +1,10 @@
+[Unit]
+Description=Puma Daemon
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/puma -d --dir /home/sdv/reddit
+
+[Install]
+WantedBy=multi-user.target
+
