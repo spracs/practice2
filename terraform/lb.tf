@@ -1,7 +1,7 @@
 resource "google_compute_instance_group" "redditapps" {
   name        = "terraform-redditapps-group"
   description = "Terraform test instance group"
-  instances = ["${google_compute_instance.reddit-app1.self_link}", "${google_compute_instance.reddit-app2.self_link}"]
+  instances = ["${google_compute_instance.reddit-app.*.self_link}",]
   named_port {
     name = "http"
     port = "9292"

@@ -36,3 +36,10 @@ variable username {
   # Значение по умолчанию
   default = "appuser"
 }
+
+variable counter {
+  description = "Count of instances"
+
+  # Значение по умолчанию
+  default = "1"
+}

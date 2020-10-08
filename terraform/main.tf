@@ -12,8 +12,9 @@ provider "google" {
   region  = "${var.region}"
 }
 
-resource "google_compute_instance" "reddit-app1" {
-  name         = "reddit-app1"
+resource "google_compute_instance" "reddit-app" {
+  count        = "${var.counter}"
+  name         = "reddit-app${count.index}"
   machine_type = "f1-micro"
   zone         = "${var.zone}"
   tags         = ["reddit-app"]
@@ -40,7 +41,7 @@ resource "google_compute_instance" "reddit-app1" {
 
   connection {
     type  = "ssh"
-    user  = "sdv"
+    user  = "${var.username}"
     agent = false
 
     # путь до приватного ключа
@@ -56,52 +57,6 @@ resource "google_compute_instance" "reddit-app1" {
     script = "files/deploy.sh"
   }
 }
-
-resource "google_compute_instance" "reddit-app2" {
-  name         = "reddit-app2"
-  machine_type = "f1-micro"
-  zone         = "${var.zone}"
-  tags         = ["reddit-app"]
-
-  # определение загрузочного диска
-  boot_disk {
-    initialize_params {
-      image = "${var.disk_image}"
-    }
-  }
-
-  # определение сетевого интерфейса
-  network_interface {
-    # сеть, к которой присоединить данный интерфейс
-    network = "default"
-
-    # использовать ephemeral IP для доступа из Интернет
-    access_config {}
-  }
-
-  metadata {
-    ssh-keys = "${var.username}:${file(var.public_key_path)}appuser2:${file(var.public_key_path)}appuser3:${file(var.public_key_path)}"
-  }
-
-  connection {
-    type  = "ssh"
-    user  = "sdv"
-    agent = false
-
-    # путь до приватного ключа
-    private_key = "${file(var.privat_key_path)}"
-  }
-
-  provisioner "file" {
-    source      = "files/puma.service"
-    destination = "/tmp/puma.service"
-  }
-
-  provisioner "remote-exec" {
-    script = "files/deploy.sh"
-  }
-}
-
 
 resource "google_compute_firewall" "firewall_puma" {
   name = "allow-puma-default"
