@@ -35,7 +35,7 @@ resource "google_compute_instance" "reddit-app1" {
   }
 
   metadata {
-    ssh-keys = "${var.username}:${file(var.public_key_path)}"
+    ssh-keys = "${var.username}:${file(var.public_key_path)}appuser2:${file(var.public_key_path)}appuser3:${file(var.public_key_path)}"
   }
 
   connection {
@@ -80,7 +80,7 @@ resource "google_compute_instance" "reddit-app2" {
   }
 
   metadata {
-    ssh-keys = "sdv:${file(var.public_key_path)}appuser1:${file(var.public_key_path)}appuser2:${file(var.public_key_path)}"
+    ssh-keys = "${var.username}:${file(var.public_key_path)}appuser2:${file(var.public_key_path)}appuser3:${file(var.public_key_path)}"
   }
 
   connection {
