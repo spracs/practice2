@@ -13,7 +13,8 @@ resource "google_compute_instance" "app" {
   network_interface {
     network = "default"
     access_config {
-      nat_ip = "${google_compute_address.app_ip.address}"
+#      nat_ip = "${google_compute_address.app_ip.address}" #for terraform v12.8
+      nat_ip = google_compute_address.app_ip.address
     }
   }
 
