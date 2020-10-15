@@ -19,6 +19,21 @@ resource "google_compute_instance" "db" {
   metadata = {
     ssh-keys = "${var.username}:${file(var.public_key_path)}"
   }
+
+  connection {
+#    host  = "${self.network_interface.0.access_config.0.nat_ip}"  #for terraform v12.8
+    host  = self.network_interface.0.access_config.0.nat_ip
+    type  = "ssh"
+    user  = var.username
+    agent = false
+    private_key = file(var.privat_key_path)
+  }
+
+  provisioner "remote-exec" {
+    inline = ["sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf", 
+              "sudo systemctl restart mongod"]
+  }
+
 }
 
 resource "google_compute_firewall" "firewall_mongo" {

@@ -21,6 +21,31 @@ resource "google_compute_instance" "app" {
   metadata = {
     ssh-keys = "${var.username}:${file(var.public_key_path)}"
   }
+
+  connection {
+#    host  = "${self.network_interface.0.access_config.0.nat_ip}"  #for terraform v12.8
+    host  = self.network_interface.0.access_config.0.nat_ip
+    type  = "ssh"
+    user  = var.username
+    agent = false
+    private_key = file(var.privat_key_path)
+  }
+
+  provisioner "file" {
+#    source      = "${path.module}/files/puma.service"
+    content      = templatefile("${path.module}/files/puma.service.tpl", {username = var.username})
+    destination = "/tmp/puma.service"
+  }
+
+  provisioner "file" {
+    content      = data.template_file.init.rendered
+    destination = "/tmp/deploy.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["sh /tmp/deploy.sh"]
+  }
+
 }
 
 resource "google_compute_address" "app_ip" {
@@ -38,3 +63,10 @@ resource "google_compute_firewall" "firewall_puma" {
   target_tags   = ["reddit-app"]
 }
 
+data "template_file" "init" {
+  template = file("${path.module}/files/deploy.sh.tpl")
+  vars = {
+    db_server_ip = var.db_server_ip
+    username = var.username
+  }
+}
