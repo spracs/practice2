@@ -20,9 +20,9 @@ variable "privat_key_path" {
   description = "Path to the privat key used for ssh access"
 }
 
-variable "disk_image" {
-  description = "Disk image"
-}
+#variable "disk_image" {
+#  description = "Disk image"
+#}
 
 variable "username" {
   description = "User name"
@@ -39,3 +39,7 @@ variable "db_disk_image" {
   default     = "reddit-db-base"
 }
 
+variable "db_server_ip" {
+  description = "External IP reddit db server"
+  default = "127.0.0.1"
+}

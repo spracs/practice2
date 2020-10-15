@@ -23,8 +23,8 @@ module "db" {
   username        = var.username
 }
 
-module "vcp" {
-  source = "./../modules/vcp"
+module "vpc" {
+  source = "./../modules/vpc"
   #source_ranges = ["195.182.152.205/32"]
 }
 
