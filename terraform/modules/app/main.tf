@@ -38,7 +38,11 @@ resource "google_compute_instance" "app" {
   }
 
   provisioner "file" {
-    content      = data.template_file.init.rendered
+    content      = templatefile("${path.module}/files/deploy.sh.tpl", 
+      {
+        username = var.username,
+        db_server_ip = var.db_server_ip
+      })
     destination = "/tmp/deploy.sh"
   }
 
@@ -63,10 +67,3 @@ resource "google_compute_firewall" "firewall_puma" {
   target_tags   = ["reddit-app"]
 }
 
-data "template_file" "init" {
-  template = file("${path.module}/files/deploy.sh.tpl")
-  vars = {
-    db_server_ip = var.db_server_ip
-    username = var.username
-  }
-}
