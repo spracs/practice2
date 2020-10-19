@@ -12,6 +12,7 @@ module "app" {
   app_disk_image  = var.app_disk_image
   username        = var.username
   db_server_ip    = module.db.db_internal_ip
+  deploing_app    = var.deploing_app
 }
 
 module "db" {

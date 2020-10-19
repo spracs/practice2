@@ -21,10 +21,12 @@ resource "google_compute_instance" "app" {
   metadata = {
     ssh-keys = "${var.username}:${file(var.public_key_path)}"
   }
+}
 
-  connection {
-#    host  = "${self.network_interface.0.access_config.0.nat_ip}"  #for terraform v12.8
-    host  = self.network_interface.0.access_config.0.nat_ip
+resource "null_resource" "app" {
+  count = var.deploing_app == "1" ? 1 : 0
+    connection {
+    host  = google_compute_instance.app.network_interface.0.access_config.0.nat_ip
     type  = "ssh"
     user  = var.username
     agent = false
@@ -49,7 +51,6 @@ resource "google_compute_instance" "app" {
   provisioner "remote-exec" {
     inline = ["sh /tmp/deploy.sh"]
   }
-
 }
 
 resource "google_compute_address" "app_ip" {

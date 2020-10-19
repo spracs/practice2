@@ -28,3 +28,8 @@ variable "db_server_ip" {
   description = "External IP reddit db server"
   default     = "127.0.0.1"
 }
+
+variable "deploing_app" {
+  description = "Deploy app, yes or no"
+  default = "0"
+}
