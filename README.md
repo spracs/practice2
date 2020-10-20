@@ -1,3 +1,6 @@
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/appuser
+
 sh [-A #проброс сертификата] -J [username]35.208.230.134 #bastion_ip[:port] [username]10.128.0.3 #target_ip[:port]
 
 Подключение через другой хост
@@ -26,3 +29,24 @@ gcloud compute instances create reddit-app --boot-disk-size=10GB --image-family 
 gcloud compute firewall-rules create open-tcp-9292 --allow=tcp:9292 --target-tags=puma-server
 
 
+### Packer
+packer validate -var-file variables.json ./appub18.json
+packer build -var-file variables.json ./appub18.json
+packer build -var 'project_id=serious-unison-288814' -var 'source_image_family=reddit-base' ./immutable.json
+
+
+### Terraform
+terraform init
+terraform plan
+terraform apply -auto-approve=true
+terraform destroy
+terraform show
+terraform state show
+terraform fmt
+
+### Ansible
+echo "ansible>=2.4">>requirements.txt
+pip install -r requirements.txt
+ansible appserver -i ./inventory -m ping
+ansible dbserver -m command -a uptime
+ansible all -m ping -i inventory.yml

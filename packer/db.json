@@ -2,7 +2,7 @@
     "variables": {
         "project_id": null,
         "source_image_family": null,
-	"machine_type": "f1-micro"
+	"machine_type": "g1-small"
     },
     "builders": [
         {
@@ -12,7 +12,7 @@
             "image_family": "reddit-db-base",
             "source_image_family": "{{ user `source_image_family` }}",
             "zone": "europe-west1-b",
-            "ssh_username": "sdv",
+            "ssh_username": "{{ user `user_name` }}",
             "machine_type": "{{ user `machine_type` }}",
 	    "image_description": "Instance with mongodb",
             "disk_size": "10",
