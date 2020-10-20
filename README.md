@@ -50,3 +50,6 @@ pip install -r requirements.txt
 ansible appserver -i ./inventory -m ping
 ansible dbserver -m command -a uptime
 ansible all -m ping -i inventory.yml
+ansible app -m shell -a "ruby -v; bundler -v"
+ansible db -m systemd -a name=mongod
+ansible db -m service -a name=mongod
