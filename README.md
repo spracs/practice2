@@ -53,3 +53,5 @@ ansible all -m ping -i inventory.yml
 ansible app -m shell -a "ruby -v; bundler -v"
 ansible db -m systemd -a name=mongod
 ansible db -m service -a name=mongod
+ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
+ansible-playbook clone.yml
