@@ -23,3 +23,7 @@ variable "db_disk_image" {
   description = "Disk image for reddit db"
 }
 
+variable "deploing_app" {
+  description = "Deploy app, yes or no"
+  default = "0"
+}
