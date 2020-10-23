@@ -60,3 +60,5 @@ ansible-playbook reddit_app.yml --check --limit db
 ansible-playbook reddit_app.yml --limit app --tags deploy-tag # One playbok, one play
 ansible-playbook reddit_app2.yml --tags deploy-tag #one playbook, some plays
 ansible-playbook site.yml # multyple playbooks
+
+
