@@ -55,3 +55,8 @@ ansible db -m systemd -a name=mongod
 ansible db -m service -a name=mongod
 ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
 ansible-playbook clone.yml
+
+ansible-playbook reddit_app.yml --check --limit db
+ansible-playbook reddit_app.yml --limit app --tags deploy-tag # One playbok, one play
+ansible-playbook reddit_app2.yml --tags deploy-tag #one playbook, some plays
+ansible-playbook site.yml # multyple playbooks
