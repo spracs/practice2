@@ -1,0 +1,15 @@
+- name: Install MongoDB
+  hosts: all
+  become: true # <-- Выполнить задание от root
+  tasks:
+    - apt_key:
+        url: http://www.mongodb.org/static/pgp/server-4.4.asc
+        state: present
+    - apt_repository:
+        repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse
+        state: present
+    - apt:
+        name: mongodb-org
+        state: present
+        update_cache: yes
+    - systemd: name=mongod enabled=yes
