@@ -3,6 +3,8 @@
 import os
 import sys
 import argparse
+import subprocess
+
 
 try:
     import json
@@ -30,14 +32,19 @@ class ExampleInventory(object):
 
     # Example inventory for testing.
     def example_inventory(self):
+        appip = subprocess.check_output('cd ~/task-branches/terraform/stage/ && terraform output app_external_ip', shell=True)
+        dbip = subprocess.check_output('cd ~/task-branches/terraform/stage/ && terraform output db_external_ip', shell=True)
+        appip = appip.decode("utf-8")
+        dbip = dbip.decode("utf-8")
+
         return {
   "app": {
     "hosts": ["appserver"],
-    "vars": {"ansible_host": "104.199.30.156"}
+    "vars": {"ansible_host": appip.strip('\n')}
   },
   "db": {
     "hosts": ["dbserver"],
-    "vars": {"ansible_host": "34.77.63.173"}
+    "vars": {"ansible_host": dbip.strip('\n')}
   }
 }
 
