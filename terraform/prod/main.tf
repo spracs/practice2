@@ -22,6 +22,7 @@ module "db" {
   zone            = var.zone
   db_disk_image   = var.db_disk_image
   username        = var.username
+  deploing_app    = var.deploing_app
 }
 
 module "vpc" {

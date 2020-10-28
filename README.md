@@ -1,3 +1,7 @@
+ssh-keygen -t rsa -f ~/.ssh/appuser -C appuser -P ""
+
+ssh -i ~/.ssh/appuser appuser@<внешний IP VM>
+
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/appuser
 
@@ -61,4 +65,5 @@ ansible-playbook reddit_app.yml --limit app --tags deploy-tag # One playbok, one
 ansible-playbook reddit_app2.yml --tags deploy-tag #one playbook, some plays
 ansible-playbook site.yml # multyple playbooks
 
-
+ansible-galaxy init app
+ansible-playbook -i environments/prod/inventory deploy.yml
