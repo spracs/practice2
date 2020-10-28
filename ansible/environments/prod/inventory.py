@@ -11,6 +11,11 @@ try:
 except ImportError:
     import simplejson as json
 
+def clear_string(text):
+    text = text.decode("utf-8")
+    return text.strip('\n')
+
+
 class ExampleInventory(object):
 
     def __init__(self):
@@ -32,20 +37,29 @@ class ExampleInventory(object):
 
     # Example inventory for testing.
     def example_inventory(self):
-        appip = subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output app_external_ip', shell=True)
-        dbip = subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output db_external_ip', shell=True)
-        appip = appip.decode("utf-8")
-        dbip = dbip.decode("utf-8")
-
+        appip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output app_external_ip', shell=True))
+        dbip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output db_external_ip', shell=True))
+        db_internal_ip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output db_internal_ip', shell=True))
         return {
-  "app": {
-    "hosts": ["appserver"],
-    "vars": {"ansible_host": appip.strip('\n')}
-  },
-  "db": {
-    "hosts": ["dbserver"],
-    "vars": {"ansible_host": dbip.strip('\n')}
-  }
+            "app": {
+                "hosts": ["appserver"],
+                "vars": {
+                    "ansible_host": appip
+                    }
+                },
+            "db": {
+                "hosts": ["dbserver"],
+                "vars": {
+                    "ansible_host": dbip
+                    }
+                },
+            "_meta": {
+                "hostvars": {
+                    "appserver": {
+                        "db_host": db_internal_ip
+                    }
+                }
+            }
 }
 
     # Empty inventory for testing.

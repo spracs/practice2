@@ -66,7 +66,7 @@ ansible-playbook reddit_app2.yml --tags deploy-tag #one playbook, some plays
 ansible-playbook site.yml # multyple playbooks
 
 ansible-galaxy init app
-ansible-playbook -i environments/prod/inventory deploy.yml
+ansible-playbook -i environments/prod/inventory.py playbooks/site.yml
 
 # Установка Community ролей 
 ansible-galaxy install -r environments/stage/requirements.yml
