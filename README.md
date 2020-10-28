@@ -67,3 +67,6 @@ ansible-playbook site.yml # multyple playbooks
 
 ansible-galaxy init app
 ansible-playbook -i environments/prod/inventory deploy.yml
+
+# Установка Community ролей 
+ansible-galaxy install -r environments/stage/requirements.yml

@@ -15,6 +15,7 @@
     dest: /home/sdv/db_config
     owner: sdv
     group: sdv
+  notify: reload puma
 
 - name: enable puma
   systemd: name=puma enabled=yes
