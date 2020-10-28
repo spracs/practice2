@@ -70,3 +70,9 @@ ansible-playbook -i environments/prod/inventory deploy.yml
 
 # Установка Community ролей 
 ansible-galaxy install -r environments/stage/requirements.yml
+
+# Шифруем файлы используя vault.key
+ansible-vault encrypt environments/prod/credentials.yml
+Для редактирования переменных нужно использовать
+команду ansible-vault edit <file>
+А для расшифровки: ansible-vault decrypt <file>
