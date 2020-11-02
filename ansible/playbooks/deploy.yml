@@ -5,13 +5,13 @@
       git:
         repo: 'https://github.com/express42/reddit.git'
         dest: /home/sdv/reddit
-        version: monolith # <-- Указываем нужную ветку
+        version: monolith
       notify: reload puma
 
     - name: Bundle install
       bundler:
         state: present
-        chdir: /home/sdv/reddit # <-- В какой директории выполнить команду bundle
+        chdir: /home/sdv/reddit
 
   handlers:
     - name: reload puma
