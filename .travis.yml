@@ -2,8 +2,9 @@ dist: trusty
 sudo: required
 language: bash
 env:
-  - tf_version=0.12.29
-  - pk_version=1.6.2
+  global:
+    pk_version: '1.6.2'
+    tf_version: '0.12.29'
 install:
   - |
     curl -L -o packer.zip "https://releases.hashicorp.com/packer/"$pk_version"/packer_"$pk_version"_linux_amd64.zip"
@@ -14,8 +15,7 @@ install:
     unzip -d ~/bin terraform.zip
     terraform --version
   - |
-    curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip
-    unzip -d ~/bin tflint.zip
+    curl https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     tflint --version
   - |
     pip install --user ansible-lint
