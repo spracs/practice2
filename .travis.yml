@@ -18,7 +18,7 @@ install:
     unzip -d ~/bin tflint.zip
     tflint --version
   - |
-    pip install ansible-lint
+    pip install --user ansible-lint
     ansible-lint --version
 
 script:
