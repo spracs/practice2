@@ -4,12 +4,10 @@ language: bash
 env:
   - tf_version=0.12.29
 install:
-- |
-  wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
-  unzip terraform_"$tf_version"_linux_amd64.zip
-  sudo mv terraform /usr/local/bin/
-  rm terraform_"$tf_version"_linux_amd64.zip
-  terraform --version
+  - |
+    curl -L -o terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+    unzip -d ~/bin terraform.zip
+    terraform --version
 
 script:
   - cd terraform/stage && terraform get && cd ../..
