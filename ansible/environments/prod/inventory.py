@@ -11,9 +11,12 @@ try:
 except ImportError:
     import simplejson as json
 
-def clear_string(text):
-    text = text.decode("utf-8")
-    return text.strip('\n')
+path_to_terraform = '~/task-branches/terraform/prod/'
+
+def get_output(text):
+    outputVar = subprocess.check_output('cd ' + path_to_terraform + ' && terraform output ' + text, shell=True)
+    outputVar = outputVar.decode("utf-8")
+    return outputVar.strip('\n')
 
 
 class ExampleInventory(object):
@@ -37,20 +40,20 @@ class ExampleInventory(object):
 
     # Example inventory for testing.
     def example_inventory(self):
-        appip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output app_external_ip', shell=True))
-        dbip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output db_external_ip', shell=True))
-        db_internal_ip = clear_string(subprocess.check_output('cd ~/task-branches/terraform/prod/ && terraform output db_internal_ip', shell=True))
+        app_external_ip = get_output('app_external_ip')
+        db_external_ip = get_output('db_external_ip')
+        db_internal_ip = get_output('db_internal_ip')
         return {
             "app": {
                 "hosts": ["appserver"],
                 "vars": {
-                    "ansible_host": appip
+                    "ansible_host": app_external_ip
                     }
                 },
             "db": {
                 "hosts": ["dbserver"],
                 "vars": {
-                    "ansible_host": dbip
+                    "ansible_host": db_external_ip
                     }
                 },
             "_meta": {
