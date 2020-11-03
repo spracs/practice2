@@ -1,8 +1,6 @@
 dist: trusty
 sudo: required
 language: bash
-python:
-  - "3.6"
 env:
   global:
     pk_version: '1.6.2'
@@ -20,6 +18,7 @@ install:
     curl https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     tflint --version
   - |
+    pyenv global 3.6
     pip install --user ansible-lint
     ansible-lint --version
 
