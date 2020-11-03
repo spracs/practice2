@@ -17,7 +17,6 @@ install:
     curl https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
     tflint --version
   - |
-    pyenv install --list
     pyenv install 3.6.3
     pyenv global 3.6.3
     pip install --user ansible-lint
