@@ -1,4 +1,4 @@
-dist: xenial
+dist: trusty
 language: shell
 env:
   global:
@@ -6,11 +6,34 @@ env:
     tf_version: '0.12.29'
 install:
   - |
+    curl -L -o packer.zip "https://releases.hashicorp.com/packer/"$pk_version"/packer_"$pk_version"_linux_amd64.zip"
+    unzip -d ~/bin packer.zip
+    packer --version
+  - |
+    curl -L -o terraform.zip "https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip"
+    unzip -d ~/bin terraform.zip
+    terraform --version
+  - |
+    curl https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    tflint --version
+  - |
+    pyenv install --list
+    pyenv install 3.6.3
+    pyenv global 3.6.3
     pip install --user ansible-lint
     ansible-lint --version
-    python --version
 
 script:
+  - packer validate -var-file packer/variables.json.example packer/app.json
+  - packer validate -var-file packer/variables.json.example packer/db.json
+  - cd terraform/stage && terraform get && cd ../..
+  - cd terraform/stage && terraform init -backend=false && cd ../..
+  - cd terraform/stage && terraform validate && cd ../..
+  - cd terraform/prod && terraform get && cd ../..
+  - cd terraform/prod && terraform init -backend=false && cd ../..
+  - cd terraform/prod && terraform validate && cd ../..
+  - tflint terraform/stage
+  - tflint terraform/prod
   - ansible-lint ansible/playbooks/site.yml
 
 
