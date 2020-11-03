@@ -7,12 +7,14 @@
   copy:
     src: puma.service
     dest: /etc/systemd/system/puma.service
+    mode: 0644
   notify: reload puma
 
 - name: Add config for DB connection
   template:
     src: db_config.j2
     dest: /home/sdv/db_config
+    mode: 0644
     owner: sdv
     group: sdv
   notify: reload puma

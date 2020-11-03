@@ -3,3 +3,4 @@ terraform11/
 *.retry
 ansible/.imported_roles/
 ansible/vault.key
+jdauphant.nginx
