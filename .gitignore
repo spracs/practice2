@@ -4,3 +4,9 @@ terraform11/
 ansible/.imported_roles/
 ansible/vault.key
 jdauphant.nginx
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache

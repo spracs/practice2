@@ -76,3 +76,13 @@ ansible-vault encrypt environments/prod/credentials.yml
 Для редактирования переменных нужно использовать
 команду ansible-vault edit <file>
 А для расшифровки: ansible-vault decrypt <file>
+
+# Vagrant
+export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox" && export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+
+vagrant init
+vagrant status --debug
+vagrant up
+vagrant destroy -f
+vagrant ssh-config
+vagrant ssh virtualservername
