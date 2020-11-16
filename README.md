@@ -86,3 +86,19 @@ vagrant up
 vagrant destroy -f
 vagrant ssh-config
 vagrant ssh virtualservername
+
+# virtualenv
+pip install virtualenv
+virtualenv venv # venv - name folder (best practice)
+source venv/bin/activate
+deactivate
+
+# python version change
+sudo update-alternatives --config python
+
+# molecule
+molecule init scenario --scenario-name default -r db -d vagrant
+molecule list
+molecule login -h instance
+molecule converge
+molecule verify
