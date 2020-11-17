@@ -1,3 +1,7 @@
+# git
+git remote add origin git@github.com:<UserName>/<RepoName>.git #Add remote repo
+git push origin -u --all
+
 ssh-keygen -t rsa -f ~/.ssh/appuser -C appuser -P ""
 
 ssh -i ~/.ssh/appuser appuser@<внешний IP VM>

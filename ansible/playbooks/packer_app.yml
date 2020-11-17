@@ -1,9 +1,5 @@
 - name: Install Ruby & Bundler
   hosts: all
   become: true
-  tasks:
-    - apt: "name={{ item }} state=present"
-      with_items:
-        - ruby-full
-        - ruby-bundler
-        - build-essential
+  roles:
+    - role: app
