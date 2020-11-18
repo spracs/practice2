@@ -1,0 +1,7 @@
+*.pyc
+.pytest_cache
+*.tar
+*.log
+*.pub
+credentials.json
+google_compute_engine
