@@ -102,7 +102,17 @@ sudo update-alternatives --config python
 
 # molecule
 molecule init scenario --scenario-name default -r db -d vagrant
+molecule create
 molecule list
 molecule login -h instance
 molecule converge
 molecule verify
+
+# Molecule GCE
+export GCE_CREDENTIALS_FILE="$(pwd)/credentials.json"
+export GCE_PROJECT_ID='serious-....'
+export GCE_SERVICE_ACCOUNT_EMAIL='travis-tests@serious-....com'
+
+# Travis
+https://gist.github.com/Artemmkin/e1c845e96589d5d71476f57ed931f1ac
+travis encrypt "patriot...:IiDJa...." --add notifications.slack -r spr.../role_db
