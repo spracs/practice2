@@ -1,15 +1,19 @@
-- apt_key:
+- name: Add keys for mongo install
+  apt_key:
     url: http://www.mongodb.org/static/pgp/server-4.4.asc
     state: present
   tags: install
-- apt_repository:
+- name: Add mongo repo
+  apt_repository:
     repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse
     state: present
   tags: install
-- apt:
+- name: Install mongo
+  apt:
     name: mongodb-org
     state: present
     update_cache: yes
   tags: install
-- systemd: name=mongod enabled=yes state=started
+- name: Add startup scripts
+  systemd: name=mongod enabled=yes state=started
   tags: install

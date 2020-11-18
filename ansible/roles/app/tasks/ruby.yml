@@ -1,4 +1,5 @@
-- apt: "name={{ item }} state=present update_cache=yes"
+- name: Install Ruby
+  apt: "name={{ item }} state=present update_cache=yes"
   with_items:
     - ruby-full
     - ruby-bundler
